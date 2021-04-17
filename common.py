@@ -56,3 +56,30 @@ def prompt_multiple_numeric_input(amount: int, bounds: [(int, int)]):
         result.append(parsed)
 
     return result
+
+
+def right_shift_string_extended(string: str):
+    if not string:
+        return string
+    chars = list(string)
+    temp1 = None
+    for current in range(len(chars)):
+        temp2 = chars[current]
+        if temp1 is not None:
+            chars[current] = temp1
+        temp1 = temp2
+    chars[0] = temp1
+
+    return "".join(chars)
+
+
+def right_shift_string(string: str):
+    return string if not string else string[-1] + string[:-1]
+
+
+def left_shift_string(string: str):
+    return string if not string else string[1:] + string[0]
+
+
+def get_next_rotating_index(current_index: int, array: []):
+    return (current_index + 1) % len(array)
