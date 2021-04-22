@@ -1,4 +1,7 @@
-from common import prompt_single_numeric_input, prompt_multiple_numeric_input, exit_with_invalid_input, left_shift_string, get_next_rotating_index
+from common import prompt_single_numeric_input, prompt_multiple_numeric_input, exit_with_invalid_input, left_shift_string, get_next_rotating_index, get_logger
+
+
+logger = get_logger()
 
 
 def validate_binary_string(binary_string: str, string_len: int):
@@ -22,7 +25,8 @@ def count_cyclic_shifts(repeats: int, dec_values: [int], max_value: int):
     return cyclic_shift_counter
 
 
-def execute_test_case():
+def execute_test_case(case_number: int):
+    logger.info(f"Starting test case ${case_number + 1}")
     string_len, repeats = prompt_multiple_numeric_input(2, [(1, 10 ** 5), (1, 10 ** 9)])
     binary_string = input()
     validate_binary_string(binary_string, string_len)
@@ -40,9 +44,11 @@ def execute_test_case():
     return count_cyclic_shifts(repeats, dec_values, max_value)
 
 
+logger.info("Cyclic shift startet")
 test_case_count = prompt_single_numeric_input(1, 10 ** 3)
 results = []
 for i in range(test_case_count):
-    results.append(execute_test_case())
+    results.append(execute_test_case(i))
 for result in results:
     print(result)
+logger.info("Test case finished")

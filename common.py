@@ -1,4 +1,5 @@
 import traceback
+import logging
 
 
 def get_input(text=None):
@@ -83,3 +84,14 @@ def left_shift_string(string: str):
 
 def get_next_rotating_index(current_index: int, array: []):
     return (current_index + 1) % len(array)
+
+
+def get_logger():
+    handler = logging.FileHandler("logs.txt")
+    formatter = logging.Formatter("{asctime}  {levelname:8} - {message}", "%Y%m%d %H:%M:%S", style="{")
+    handler.setFormatter(formatter)
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+
+    return logger
