@@ -1,6 +1,5 @@
 from common import prompt_single_numeric_input, prompt_multiple_numeric_input, exit_with_invalid_input, left_shift_string, get_next_rotating_index, get_logger
 
-
 logger = get_logger()
 
 
@@ -44,11 +43,12 @@ def execute_test_case(case_number: int):
     return count_cyclic_shifts(repeats, dec_values, max_value)
 
 
-logger.info("Cyclic shift startet")
-test_case_count = prompt_single_numeric_input(1, 10 ** 3)
-results = []
-for i in range(test_case_count):
-    results.append(execute_test_case(i))
-for result in results:
-    print(result)
-logger.info("Test case finished")
+if __name__ == "__main__":
+    logger.info("Cyclic shift startet")
+    test_case_count = prompt_single_numeric_input(1, 10 ** 3)
+    results = []
+    for i in range(test_case_count):
+        results.append(execute_test_case(i))
+    for result in results:
+        print(result)
+    logger.info("Test case finished")

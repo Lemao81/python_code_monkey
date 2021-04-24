@@ -5,7 +5,7 @@ from common import prompt_multiple_numeric_input, right_shift_string_extended, r
 
 class CommonTests(TestCase):
     @patch('common.get_input', return_value='2 6 3')
-    def test_prompt_multiple_numeric_input__single_bound__in_range(self, input):
+    def test_prompt_multiple_numeric_input__single_bound__in_range(self):
         # act
         result = prompt_multiple_numeric_input(3, [(1, 10)])
 
@@ -16,13 +16,13 @@ class CommonTests(TestCase):
         self.assertEqual(result[2], 3)
 
     @patch('common.get_input', return_value='2 12 3')
-    def test_prompt_multiple_numeric_input__single_bound__out_of_range(self, input):
+    def test_prompt_multiple_numeric_input__single_bound__out_of_range(self):
         # act + assert
         with self.assertRaises(SystemExit):
             prompt_multiple_numeric_input(3, [(1, 10)])
 
     @patch('common.get_input', return_value='8 15')
-    def test_prompt_multiple_numeric_input__multiple_bound__valid_bound_amount(self, input):
+    def test_prompt_multiple_numeric_input__multiple_bound__valid_bound_amount(self):
         # act
         result = prompt_multiple_numeric_input(2, [(1, 10), (3, 20)])
 
@@ -32,7 +32,7 @@ class CommonTests(TestCase):
         self.assertEqual(result[1], 15)
 
     @patch('common.get_input', return_value='8 15')
-    def test_prompt_multiple_numeric_input__multiple_bound__invalid_bound_amount(self, input):
+    def test_prompt_multiple_numeric_input__multiple_bound__invalid_bound_amount(self):
         # act + assert
         with self.assertRaises(SystemExit):
             prompt_multiple_numeric_input(2, [(1, 10), (3, 20), (2, 8)])
