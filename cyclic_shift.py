@@ -43,12 +43,13 @@ def execute_test_case(case_number: int):
     return count_cyclic_shifts(repeats, dec_values, max_value)
 
 
-if __name__ == "__main__":
-    logger.info("Cyclic shift startet")
-    test_case_count = prompt_single_numeric_input(1, 10 ** 3)
-    results = []
-    for i in range(test_case_count):
-        results.append(execute_test_case(i))
-    for result in results:
-        print(result)
-    logger.info("Test case finished")
+def run():
+    if __name__ == "__main__":
+        logger.info("Cyclic shift startet")
+        test_case_count = prompt_single_numeric_input(1, 10 ** 3)
+        results = []
+        for i in range(test_case_count):
+            results.append(execute_test_case(i))
+        for result in results:
+            print(result)
+        logger.info("Test case finished")
