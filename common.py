@@ -95,3 +95,11 @@ def get_logger():
     logger.addHandler(handler)
 
     return logger
+
+
+def process_and_print_test_case_results(test_case_count: int, test_case_func):
+    results = []
+    for i in range(test_case_count):
+        results.append(test_case_func(i))
+    for result in results:
+        print(result)
