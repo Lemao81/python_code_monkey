@@ -50,9 +50,9 @@ def prompt_multiple_numeric_input(amount: int, bounds: [(int, int)]):
     splits = input_string.split()
     validate_length(splits, amount)
     result = []
-    for i in range(len(splits)):
+    for i, split in enumerate(splits):
         lower, upper = bounds[0] if is_single_bound else bounds[i]
-        parsed = parse_int(splits[i])
+        parsed = parse_int(split)
         validate_range(parsed, lower, upper)
         result.append(parsed)
 
@@ -64,10 +64,10 @@ def right_shift_string_extended(string: str):
         return string
     chars = list(string)
     temp1 = None
-    for current in range(len(chars)):
-        temp2 = chars[current]
+    for i, char in enumerate(chars):
+        temp2 = char
         if temp1 is not None:
-            chars[current] = temp1
+            chars[i] = temp1
         temp1 = temp2
     chars[0] = temp1
 
