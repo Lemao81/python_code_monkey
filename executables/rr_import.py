@@ -14,8 +14,8 @@ class ImportCmd(cmd.Cmd):
             4: '1.3.6.1.4.1.24930.2.64834516866074.1587242',
             5: '1.2.276.0.18.14.200.2.0.0.2.20210420.155835.67.94',
             6: '1.3.46.670589.5.2.10.2156913941.892665384.993397',
-            7: '',
-            8: ''
+            7: '1.3.6.1.4.1.24930.2.64870186785082.1744998',
+            8: '1.2.276.0.33.1.0.4.192.168.56.148.20200323.1175751.86602.2'
         }
         self.accession_numbers = {
             1: 'KNI_0002',
@@ -25,7 +25,7 @@ class ImportCmd(cmd.Cmd):
             5: '1345229',
             6: '',
             7: '',
-            8: ''
+            8: 'LWS_0002'
         }
         self.patient_ids = {
             1: 'KNI0001',
@@ -34,43 +34,43 @@ class ImportCmd(cmd.Cmd):
             4: 'SCH0001',
             5: '43549',
             6: '0009703828',
-            7: '',
-            8: ''
+            7: 'PID_4711',
+            8: 'LWS0001'
         }
         self.prompt_study()
         self.prompt_variant()
 
     def prompt_study(self):
         input_string = input('''
-                Studie auswählen (Enter für Studie 1):
-                  1 - Knie^Routine Knie / Knie^Hilde^
-                  2 - MR LWS / Fachtan^Andreas
-                  3 - UNDEFINED / ROSE^RAPHAEL
-                  4 - Schulter_^Routine+ / Schulter^Peter^
-                  5 - MR Knie li. / Neubig^Detlef
-                  6 - HEAD EXP2 -> fehlende Pflichtfelder
-                  7 - 
-                  8 - 
-
-                Eingabe: ''')
+    Studie auswählen (Enter für Studie 1):
+      1 - Knie^Routine Knie / Knie^Hilde^
+      2 - MR LWS / Fachtan^Andreas
+      3 - UNDEFINED / ROSE^RAPHAEL
+      4 - Schulter_^Routine+ / Schulter^Peter^
+      5 - MR Knie li. / Neubig^Detlef
+      6 - HEAD EXP2 -> fehlende Pflichtfelder
+      7 - Schulter_^Routine+ / Schulter^Sabine^
+      8 - Wirbelsäule^Routine LWS / Wirbel-Säule^Lemmi^
+    
+    Eingabe: ''')
 
         if not input_string:
             input_string = '1'
         self.study = int(input_string)
-        if self.study < 1 or self.study > 6:
-            raise Exception('Ungültige Eingabe für Patient')
+        if self.study < 1 or self.study > 8:
+            raise Exception('Ungültige Eingabe für Studie')
 
     def prompt_variant(self):
         self.prompt = '''
-                Variante auswählen (exit zum Verlassen):
-                  1 - StudyInstanceUid only
-                  2 - AccessionNumber only
-                  3 - PatientId + StudyInstanceUid + AccessionNumber
-                  4 - PatientId + StudyInstanceUid
-                  5 - PatientId + AccessionNumber
-                  6 - PatientId only
-
-                Eingabe: '''
+    Variante auswählen (exit zum Verlassen):
+      1 - StudyInstanceUid only
+      2 - AccessionNumber only
+      3 - PatientId + StudyInstanceUid + AccessionNumber
+      4 - PatientId + StudyInstanceUid
+      5 - PatientId + AccessionNumber
+      6 - PatientId only
+    
+    Eingabe: '''
 
     def do_1(self, _):
         self.start_app(f'--studyInstanceUid={self.get_study_instance_uid()}')
@@ -92,7 +92,7 @@ class ImportCmd(cmd.Cmd):
         self.start_app(f'--patientId={self.get_patient_id()}')
 
     def do_exit(self, _):
-        print('Tschüss')
+        print('\nTschüss')
         return True
 
     def start_app(self, *params):

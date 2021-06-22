@@ -97,5 +97,6 @@ work/
 
 logs.txt
 tracings/
+executables/build
 
 testing.py
