@@ -1,5 +1,8 @@
 import traceback
 import logging
+import random
+
+from models.node import Node
 
 
 def get_input(text=None):
@@ -103,3 +106,32 @@ def process_and_print_test_case_results(test_case_count: int, test_case_func):
         results.append(test_case_func(i))
     for result in results:
         print(result)
+
+
+def create_random_node():
+    global node_id
+    node = Node(node_id, random.randint(0, 10))
+    node_id += 1
+    return node
+
+
+def create_linked_list(count: int):
+    global node_id
+    node_id = 0
+    first_node = create_random_node()
+    before_node = first_node
+    for i in range(count - 1):
+        next_node = create_random_node()
+        before_node.next = next_node
+        before_node = next_node
+    return first_node
+
+
+def print_linked_list(text: str, first_node: Node):
+    print(text)
+    current_node = first_node
+    values = []
+    while current_node is not None:
+        values.append(str(current_node.value))
+        current_node = current_node.next
+    print(' '.join(values))
