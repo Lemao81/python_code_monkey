@@ -110,7 +110,7 @@ def process_and_print_test_case_results(test_case_count: int, test_case_func):
 
 def create_random_node():
     global node_id
-    node = Node(node_id, random.randint(0, 10))
+    node = Node(node_id, random.randint(0, 9))
     node_id += 1
     return node
 
@@ -135,3 +135,18 @@ def print_linked_list(text: str, first_node: Node):
         values.append(str(current_node.value))
         current_node = current_node.next
     print(' '.join(values))
+
+
+def linked_list_insert_after(before: Node, after: Node):
+    temp = after.next.next
+    after.next.next = before.next
+    before.next = after.next
+    after.next = temp
+
+
+def get_linked_list_length(first_node: Node):
+    count = 0
+    while first_node is not None:
+        first_node = first_node.next
+        count += 1
+    return count
