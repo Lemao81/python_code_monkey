@@ -65,28 +65,6 @@ def number_to_linked_list_forward_order_recursive(number: int):
     return (id, new_node, first_node)
 
 
-# def sum_number_linked_lists_reverse(first: Node, second: Node):
-#     first_node = None
-#     result = None
-#     carryover = 0
-#     while first is not None or second is not None:
-#         first_value = 0 if first is None else first.value
-#         second_value = 0 if second is None else second.value
-#         sum = first_value + second_value + carryover
-#         number = sum % 10
-#         carryover = math.floor(sum / 10)
-#         if result is None:
-#             result = Node(1, number)
-#             first_node = result
-#         else:
-#             result.next = Node(result.id + 1, number)
-#             result = result.next
-#         first = None if first is None else first.next
-#         second = None if second is None else second.next
-#     if carryover > 0:
-#         result.next = Node(result.id + 1, carryover)
-#     return first_node
-
 def sum_number_linked_lists_reverse(first: Node, second: Node):
     result = sum_number_linked_lists_reverse_recursive(first, second)
     return result
