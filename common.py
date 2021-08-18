@@ -150,3 +150,9 @@ def get_linked_list_length(first_node: Node):
         first_node = first_node.next
         count += 1
     return count
+
+
+def get_linked_list_last_node(first_node: Node):
+    while first_node.next is not None:
+        first_node = first_node.next
+    return first_node
