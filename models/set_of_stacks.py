@@ -23,4 +23,4 @@ class SetOfStacks:
             self._current_stack_count -= 1
         else:
             self._current_stack = self._stacks.pop()
-        return self._current_stack.pop()
+        return self._current_stack.dequeue()

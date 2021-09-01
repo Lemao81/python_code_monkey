@@ -4,39 +4,35 @@ from models.minimum_node import MinimumNode
 class Stack:
     def __init__(self):
         self._node_id_increment = 0
-        self.head = None
+        self._head = None
+        self.count = 0
 
     def push(self, value):
-        minimum = value if self.head is None else min(value, self.head.minimum)
+        minimum = value if self._head is None else min(value, self._head.minimum)
         new_node = MinimumNode(self._node_id_increment, value, minimum)
-        new_node.next = self.head
-        self.head = new_node
+        new_node.next = self._head
+        self._head = new_node
         self._node_id_increment += 1
+        self.count += 1
 
     def pop(self):
-        if self.head is None:
+        if self._head is None:
             raise ValueError
-        value = self.head.value
-        self.head = self.head.next
+        value = self._head.value
+        self._head = self._head.next
+        self.count -= 1
         return value
 
     def peek(self):
-        if self.head is None:
+        if self._head is None:
             raise ValueError
-        return self.head.value
+        return self._head.value
 
     def clear(self):
-        self.head = None
-
-    def count(self) -> int:
-        count = 0
-        runner = self.head
-        while runner is not None:
-            count += 1
-            runner = runner.next
-        return count
+        self._head = None
+        self.count = 0
 
     def min(self):
-        if self.head is None:
+        if self._head is None:
             raise ValueError
-        return self.head.minimum
+        return self._head.minimum

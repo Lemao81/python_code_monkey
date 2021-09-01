@@ -3,41 +3,35 @@ from models.data_node import DataNode
 
 class Queue:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self._head = None
+        self._tail = None
+        self.count = 0
 
     def enqueue(self, value):
         node = DataNode(value)
-        if self.tail is None:
-            self.tail = self.head = node
+        if self._tail is None:
+            self._tail = self._head = node
         else:
-            self.tail.next = node
-            self.tail = self.tail.next
+            self._tail.next = node
+            self._tail = self._tail.next
+        self.count += 1
 
-        pass
-
-    def pop(self):
-        if self.head is None:
+    def dequeue(self):
+        if self._head is None:
             raise ValueError
-        value = self.head.value
-        if self.head.next is None:
-            self.head = self.tail = None
+        value = self._head.value
+        if self._head.next is None:
+            self._head = self._tail = None
         else:
-            self.head = self.head.next
+            self._head = self._head.next
+        self.count -= 1
         return value
 
     def peek(self):
-        if self.head is None:
+        if self._head is None:
             raise ValueError
-        return self.head.value
+        return self._head.value
 
     def clear(self):
-        self.head = self.tail = None
-
-    def count(self) -> int:
-        count = 0
-        runner = self.head
-        while runner is not None:
-            count += 1
-            runner = runner.next
-        return count
+        self._head = self._tail = None
+        self.count = 0
