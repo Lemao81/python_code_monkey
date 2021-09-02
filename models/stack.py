@@ -28,6 +28,9 @@ class Stack:
             raise ValueError
         return self._head.value
 
+    def is_empty(self):
+        return self.count == 0
+
     def clear(self):
         self._head = None
         self.count = 0
