@@ -1,13 +1,16 @@
 from models.data_node import DataNode
+from typing import TypeVar, Generic
+
+T = TypeVar('T')
 
 
-class Queue:
+class Queue(Generic[T]):
     def __init__(self):
         self._head = None
         self._tail = None
         self.count = 0
 
-    def enqueue(self, value):
+    def enqueue(self, value: T):
         node = DataNode(value)
         if self._tail is None:
             self._tail = self._head = node
@@ -16,7 +19,7 @@ class Queue:
             self._tail = self._tail.next
         self.count += 1
 
-    def dequeue(self):
+    def dequeue(self) -> T:
         if self._head is None:
             raise ValueError
         value = self._head.value
@@ -27,7 +30,7 @@ class Queue:
         self.count -= 1
         return value
 
-    def peek(self):
+    def peek(self) -> T:
         if self._head is None:
             raise ValueError
         return self._head.value
