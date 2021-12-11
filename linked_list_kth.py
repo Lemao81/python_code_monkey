@@ -1,15 +1,15 @@
 from common import create_linked_list, print_linked_list
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 
 
-def linked_list_skip(first_node: Node, skip_count: int):
+def linked_list_skip(first_node: LinkedListNode, skip_count: int):
     while first_node is not None and skip_count > 0:
         first_node = first_node.next
         skip_count -= 1
     return first_node
 
 
-def linked_list_skip2(first_node: Node, skip_count: int):
+def linked_list_skip2(first_node: LinkedListNode, skip_count: int):
     for i in range(skip_count):
         first_node = first_node.next
         if first_node is None:
@@ -17,7 +17,7 @@ def linked_list_skip2(first_node: Node, skip_count: int):
     return first_node
 
 
-def count_linked_list(first_node: Node):
+def count_linked_list(first_node: LinkedListNode):
     counter = 0
     while first_node is not None:
         first_node = first_node.next
@@ -25,7 +25,7 @@ def count_linked_list(first_node: Node):
     return counter
 
 
-def iterate_linked_list(first_node: Node, count: int, k: int):
+def iterate_linked_list(first_node: LinkedListNode, count: int, k: int):
     if first_node.next is None:
         return count, first_node, count == k
     else:
@@ -37,7 +37,7 @@ def iterate_linked_list(first_node: Node, count: int, k: int):
         return size, None, False
 
 
-def iterate_linked_list2(first_node: Node, count: int, k: int):
+def iterate_linked_list2(first_node: LinkedListNode, count: int, k: int):
     if first_node.next is None:
         return 1, first_node
     else:
@@ -47,7 +47,7 @@ def iterate_linked_list2(first_node: Node, count: int, k: int):
         return reverse_count + 1, node
 
 
-def iterate_linked_list3(first_node: Node, k: int):
+def iterate_linked_list3(first_node: LinkedListNode, k: int):
     runner = first_node
     runner_count = 0
     while runner is not None:

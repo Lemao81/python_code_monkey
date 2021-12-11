@@ -1,10 +1,10 @@
 from common import create_linked_list, print_linked_list
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 
 node_id = 0
 
 
-def sort_linked_list(first_node: Node):
+def sort_linked_list(first_node: LinkedListNode):
     current_node = first_node
     prev_current_node = None
     while current_node is not None:
@@ -26,7 +26,7 @@ def sort_linked_list(first_node: Node):
     return first_node
 
 
-def swap_nodes(before_left_node, left_node: Node, before_right_node: Node):
+def swap_nodes(before_left_node, left_node: LinkedListNode, before_right_node: LinkedListNode):
     right_node = before_right_node.next
     if before_left_node is not None:
         before_left_node.next = right_node

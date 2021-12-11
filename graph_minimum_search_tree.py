@@ -1,6 +1,6 @@
 from typing import Union
 
-from models.tree_node import BinaryTreeNode
+from models.binary_tree_node import BinaryTreeNode
 
 TreeNodeOrNone = Union[BinaryTreeNode, None]
 

@@ -1,8 +1,8 @@
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 from common import create_linked_list
 
 
-def check_node_intersection1(first: Node, second: Node):
+def check_node_intersection1(first: LinkedListNode, second: LinkedListNode):
     while first is not None:
         second_runner = second
         while second_runner is not None:
@@ -13,7 +13,7 @@ def check_node_intersection1(first: Node, second: Node):
     return None
 
 
-def check_node_intersection2(first: Node, second: Node):
+def check_node_intersection2(first: LinkedListNode, second: LinkedListNode):
     first_hash = {}
     while first is not None:
         first_hash[first] = True
@@ -25,7 +25,7 @@ def check_node_intersection2(first: Node, second: Node):
     return None
 
 
-def check_node_intersection3(first: Node, second: Node):
+def check_node_intersection3(first: LinkedListNode, second: LinkedListNode):
     (is_intersecting, first_length, second_length) = check_is_intersecting_and_return_lengths(first, second)
     if not is_intersecting:
         return None
@@ -41,7 +41,7 @@ def check_node_intersection3(first: Node, second: Node):
     raise Exception
 
 
-def check_is_intersecting_and_return_lengths(first: Node, second: Node):
+def check_is_intersecting_and_return_lengths(first: LinkedListNode, second: LinkedListNode):
     first_length = 1
     while first.next is not None:
         first_length += 1
@@ -53,7 +53,7 @@ def check_is_intersecting_and_return_lengths(first: Node, second: Node):
     return first == second, first_length, second_length
 
 
-def get_intersecting_message(node: Node) -> str:
+def get_intersecting_message(node: LinkedListNode) -> str:
     return 'not intersecting' if node is None else f'intersecting (id {str(node.id)})'
 
 

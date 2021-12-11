@@ -2,7 +2,9 @@ import traceback
 import logging
 import random
 
-from models.node import Node
+from models.binary_tree import BinaryTree
+from models.binary_tree_node import BinaryTreeNode
+from models.linked_list_node import LinkedListNode
 
 
 def get_input(text=None):
@@ -109,9 +111,7 @@ def process_and_print_test_case_results(test_case_count: int, test_case_func):
 
 
 def create_random_node():
-    global node_id
-    node = Node(node_id, random.randint(0, 9))
-    node_id += 1
+    node = LinkedListNode(random.randint(0, 9))
     return node
 
 
@@ -127,7 +127,7 @@ def create_linked_list(count: int):
     return first_node
 
 
-def print_linked_list(text: str, first_node: Node):
+def print_linked_list(text: str, first_node: LinkedListNode):
     print(text)
     current_node = first_node
     values = []
@@ -137,14 +137,14 @@ def print_linked_list(text: str, first_node: Node):
     print(' '.join(values))
 
 
-def linked_list_insert_after(before: Node, after: Node):
+def linked_list_insert_after(before: LinkedListNode, after: LinkedListNode):
     temp = after.next.next
     after.next.next = before.next
     before.next = after.next
     after.next = temp
 
 
-def get_linked_list_length(first_node: Node):
+def get_linked_list_length(first_node: LinkedListNode):
     count = 0
     while first_node is not None:
         first_node = first_node.next
@@ -152,7 +152,21 @@ def get_linked_list_length(first_node: Node):
     return count
 
 
-def get_linked_list_last_node(first_node: Node):
+def get_linked_list_last_node(first_node: LinkedListNode):
     while first_node.next is not None:
         first_node = first_node.next
     return first_node
+
+
+def create_random_binary_tree(depth: int) -> BinaryTree:
+    tree = BinaryTree(random.randint(1, 99))
+    for i in range(depth):
+        tree.traverse_post_order(_create_left_right_random_binary_tree_nodes)
+    return tree
+
+
+def _create_left_right_random_binary_tree_nodes(node: BinaryTreeNode):
+    if node.left is None:
+        node.left = BinaryTreeNode(random.randint(1, 99))
+    if node.right is None:
+        node.right = BinaryTreeNode(random.randint(1, 99))

@@ -1,6 +1,6 @@
 import math
 
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 from common import print_linked_list, get_linked_list_length
 
 
@@ -9,7 +9,7 @@ def create_letter_linked_list(string: str):
     tail = None
     for c in string:
         id = 1 if tail is None else tail.id + 1
-        node = Node(id, c)
+        node = LinkedListNode(id, c)
         if tail is None:
             tail = node
             head = node
@@ -19,12 +19,12 @@ def create_letter_linked_list(string: str):
     return head
 
 
-def check_is_palindrome(first_node: Node):
+def check_is_palindrome(first_node: LinkedListNode):
     (is_palindrome, _) = is_palindrome_recursive(first_node, '')
     return is_palindrome
 
 
-def is_palindrome_recursive(first_node: Node, word: str):
+def is_palindrome_recursive(first_node: LinkedListNode, word: str):
     if first_node.next is not None:
         (result, index) = is_palindrome_recursive(first_node.next, word + first_node.value)
     else:
@@ -35,10 +35,10 @@ def is_palindrome_recursive(first_node: Node, word: str):
     return (result, index)
 
 
-def reverse_linked_list(first_node: Node):
+def reverse_linked_list(first_node: LinkedListNode):
     node_stack = []
     while first_node is not None:
-        node_stack.append(Node(first_node.id, first_node.value))
+        node_stack.append(LinkedListNode(first_node.id, first_node.value))
         first_node = first_node.next
     head = node_stack.pop()
     tail = head
@@ -49,7 +49,7 @@ def reverse_linked_list(first_node: Node):
     return head
 
 
-def check_is_palindrome2(first_node: Node):
+def check_is_palindrome2(first_node: LinkedListNode):
     forward = first_node
     reverse = reverse_linked_list(first_node)
     while forward is not None and reverse is not None:
@@ -60,13 +60,13 @@ def check_is_palindrome2(first_node: Node):
     return True
 
 
-def check_is_palindrome3(first_node: Node):
+def check_is_palindrome3(first_node: LinkedListNode):
     length = get_linked_list_length(first_node)
     (is_palindrome, _) = check_is_palindrome3_recursive(first_node, 0, math.floor(length / 2), length % 2 == 0)
     return is_palindrome
 
 
-def check_is_palindrome3_recursive(current_node: Node, current_index: int, mid_index: int, is_even: bool):
+def check_is_palindrome3_recursive(current_node: LinkedListNode, current_index: int, mid_index: int, is_even: bool):
     limit = mid_index - 1 if is_even else mid_index
     if current_index < limit:
         (is_palindrome, runner) = check_is_palindrome3_recursive(current_node.next, current_index + 1, mid_index, is_even)
@@ -77,7 +77,7 @@ def check_is_palindrome3_recursive(current_node: Node, current_index: int, mid_i
     return (is_palindrome, runner.next)
 
 
-def check_is_palindrome4(first_node: Node):
+def check_is_palindrome4(first_node: LinkedListNode):
     slow_runner = first_node
     fast_runner = first_node
     first_half_stack = []

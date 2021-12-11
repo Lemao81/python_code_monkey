@@ -1,9 +1,9 @@
 from common import create_linked_list, print_linked_list, linked_list_insert_after
 
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 
 
-def partition_linked_list(current_node: Node, partition: int):
+def partition_linked_list(current_node: LinkedListNode, partition: int):
     if current_node.next is not None:
         (connect_node, last_node) = partition_linked_list(current_node.next, partition)
     else:

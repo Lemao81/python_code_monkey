@@ -7,6 +7,10 @@ class BinaryTreeNode:
         self.left = None
         self.right = None
 
+    def __str__(self):
+        return str(self.value)
+
+    # incomplete
     def print(self):
         levels = [[]]
         self._print_traverse(0, levels, self)
@@ -23,6 +27,7 @@ class BinaryTreeNode:
                 to_print.append(' ' * value_gap_count if j % 2 == 0 else ' ' * branch_gap_count)
             print(''.join(to_print).center(max_width))
 
+    # incomplete
     def _print_traverse(self, level_index: int, levels: [[int]], node):
         if len(levels) == level_index:
             levels.append([])

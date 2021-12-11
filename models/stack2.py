@@ -1,4 +1,4 @@
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 
 
 class Stack2:
@@ -8,8 +8,8 @@ class Stack2:
         self._ascending_head = None
 
     def push(self, value):
-        new_value_node = Node(self._node_id_increment, value)
-        new_ascending_node = Node(self._node_id_increment, value)
+        new_value_node = LinkedListNode(self._node_id_increment, value)
+        new_ascending_node = LinkedListNode(self._node_id_increment, value)
         self._node_id_increment += 1
         new_value_node.next = self._head
         self._head = new_value_node

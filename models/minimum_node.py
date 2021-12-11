@@ -1,7 +1,7 @@
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 
 
-class MinimumNode(Node):
+class MinimumNode(LinkedListNode):
     def __init__(self, id: int, value: int, mininum: int):
-        Node.__init__(self, id, value)
+        LinkedListNode.__init__(self, id, value)
         self.minimum = mininum

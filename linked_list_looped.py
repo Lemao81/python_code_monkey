@@ -1,8 +1,8 @@
 from common import create_linked_list, get_linked_list_last_node
-from models.node import Node
+from models.linked_list_node import LinkedListNode
 
 
-def check_is_looped_list1(first_node: Node):
+def check_is_looped_list1(first_node: LinkedListNode):
     hash_map = {}
     while first_node.next is not None:
         if first_node.next in hash_map:
@@ -13,7 +13,7 @@ def check_is_looped_list1(first_node: Node):
     return None
 
 
-def check_is_looped_list2(first_node: Node):
+def check_is_looped_list2(first_node: LinkedListNode):
     slow_runner = first_node
     fast_runner = first_node
     while fast_runner is not None and fast_runner.next is not None:
@@ -30,7 +30,7 @@ def check_is_looped_list2(first_node: Node):
     return fast_runner
 
 
-def print_result(loop_node: Node):
+def print_result(loop_node: LinkedListNode):
     is_looped = loop_node is not None
     print(f'IS looped (id {loop_node.id})' if is_looped else 'Is NOT looped')
 
