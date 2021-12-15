@@ -21,8 +21,14 @@ class BinaryTree:
     def traverse_post_order(self, visit: Callable[[BinaryTreeNode], None]):
         self._traverse_post_order_recursive(self.root, visit)
 
+    def check_pre_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> bool:
+        return self._check_pre_order_recursive(self.root, predicate)
+
     def get_depth(self):
         return self._get_depth_recursive(self.root, 0)
+
+    def is_balanced(self):
+        return self.check_pre_order(self._check_balanced)
 
     def print(self):
         depth = self.get_depth()
@@ -60,6 +66,10 @@ class BinaryTree:
         self._traverse_post_order_recursive(node.right, visit)
         visit(node)
 
+    def _check_pre_order_recursive(self, node: BinaryTreeNode, predicate: Callable[[BinaryTreeNode], bool]) -> bool:
+        return predicate(node) and (
+                node is None or self._check_pre_order_recursive(node.left, predicate) and self._check_pre_order_recursive(node.right, predicate))
+
     def _get_depth_recursive(self, node: BinaryTreeNode, depth_index: int) -> int:
         if node is None:
             return depth_index - 1
@@ -86,3 +96,14 @@ class BinaryTree:
             result += str(head.value.value).rjust(2, ' ').center(math.floor(total_length / count), ' ')
             head = head.next
         return result
+
+    def _check_balanced(self, node: BinaryTreeNode) -> bool:
+        if node is None:
+            return True
+
+        is_terminating = node.left is None and node.right is None
+        is_continuing_balanced = node.left is not None and node.right is not None
+        is_left_nearly_terminating = node.right is None and node.left is not None and node.left.left is None and node.left.right is None
+        is_right_nearly_terminating = node.left is None and node.right is not None and node.right.left is None and node.right.right is None
+
+        return is_terminating or is_continuing_balanced or is_left_nearly_terminating or is_right_nearly_terminating
