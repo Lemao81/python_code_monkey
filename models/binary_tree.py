@@ -27,8 +27,16 @@ class BinaryTree:
     def get_depth(self):
         return self._get_depth_recursive(self.root, 0)
 
+    def get_depth2(self):
+        self.root.calculate_depths()
+        return self.root.depth
+
     def is_balanced(self):
         return self.check_pre_order(self._check_balanced)
+
+    def is_balanced2(self):
+        self.root.calculate_depths()
+        return self.check_pre_order(lambda node: node is None or node.is_balanced())
 
     def print(self):
         depth = self.get_depth()
@@ -76,6 +84,7 @@ class BinaryTree:
 
         left_value = self._get_depth_recursive(node.left, depth_index + 1)
         right_value = self._get_depth_recursive(node.right, depth_index + 1)
+
         return left_value if left_value >= right_value else right_value
 
     def _get_depth_level_linked_lists(self, node: BinaryTreeNode, lists: [], depth_index: int):
