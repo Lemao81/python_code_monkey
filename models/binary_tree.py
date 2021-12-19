@@ -1,4 +1,5 @@
 import math
+import sys
 
 from models.binary_tree_node import BinaryTreeNode
 from typing import Callable
@@ -24,19 +25,32 @@ class BinaryTree:
     def check_pre_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> bool:
         return self._check_pre_order_recursive(self.root, predicate)
 
-    def get_depth(self):
+    def get_depth(self) -> int:
         return self._get_depth_recursive(self.root, 0)
 
-    def get_depth2(self):
+    def get_depth2(self) -> int:
         self.root.calculate_depths()
         return self.root.depth
 
-    def is_balanced(self):
+    def is_balanced(self) -> bool:
         return self.check_pre_order(self._check_balanced)
 
-    def is_balanced2(self):
+    def is_balanced2(self) -> bool:
         self.root.calculate_depths()
         return self.check_pre_order(lambda node: node is None or node.is_balanced())
+
+    def is_search_tree(self) -> bool:
+        values_sorted = self._get_values_sorted_recursive(self.root)
+        print(values_sorted)
+        current_max = 0
+        for i in values_sorted:
+            if i < current_max:
+                return False
+            current_max = i
+        return True
+
+    def is_search_tree2(self) -> bool:
+        return self._check_search_tree_range(self.root, -sys.maxsize, sys.maxsize)
 
     def print(self):
         depth = self.get_depth()
@@ -97,7 +111,8 @@ class BinaryTree:
         self._get_depth_level_linked_lists(node.left, lists, depth_index + 1)
         self._get_depth_level_linked_lists(node.right, lists, depth_index + 1)
 
-    def _map_depth_level_linked_list_to_print_line(self, linked_list: LinkedList, total_length: int) -> str:
+    @staticmethod
+    def _map_depth_level_linked_list_to_print_line(linked_list: LinkedList, total_length: int) -> str:
         result = ''
         count = linked_list.get_count()
         head = linked_list.root
@@ -106,7 +121,8 @@ class BinaryTree:
             head = head.next
         return result
 
-    def _check_balanced(self, node: BinaryTreeNode) -> bool:
+    @staticmethod
+    def _check_balanced(node: BinaryTreeNode) -> bool:
         if node is None:
             return True
 
@@ -116,3 +132,25 @@ class BinaryTree:
         is_right_nearly_terminating = node.left is None and node.right is not None and node.right.left is None and node.right.right is None
 
         return is_terminating or is_continuing_balanced or is_left_nearly_terminating or is_right_nearly_terminating
+
+    def _get_values_sorted_recursive(self, node: BinaryTreeNode) -> []:
+        if node is None:
+            return []
+
+        left_values = self._get_values_sorted_recursive(node.left)
+        right_values = self._get_values_sorted_recursive(node.right)
+
+        return [*left_values, node.value, *right_values]
+
+    def _check_search_tree_range(self, node: BinaryTreeNode, left_bound: int, right_bound: int) -> bool:
+        if node is None:
+            return True
+
+        if not left_bound <= node.value <= right_bound:
+            return False
+        if not self._check_search_tree_range(node.left, left_bound, node.value):
+            return False
+        if not self._check_search_tree_range(node.right, node.value, right_bound):
+            return False
+
+        return True

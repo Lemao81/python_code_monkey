@@ -5,6 +5,7 @@ import random
 from models.binary_tree import BinaryTree
 from models.binary_tree_node import BinaryTreeNode
 from models.linked_list_node import LinkedListNode
+from typing import List
 
 
 def get_input(text=None):
@@ -165,8 +166,61 @@ def create_random_binary_tree(depth: int) -> BinaryTree:
     return tree
 
 
+def create_balanced_binary_tree(values: List) -> BinaryTree:
+    values.reverse()
+    tree = BinaryTree(values.pop())
+    _append_binary_tree_nodes_recursive([tree.root], values)
+    return tree
+
+
+def create_binary_search_tree(values: List) -> BinaryTree:
+    values.sort()
+    (mid, left_part, right_part) = _split_in_mid_left_right(values)
+    tree = BinaryTree(mid)
+    _append_binary_search_tree_nodes_recursive(tree.root, left_part, right_part)
+    return tree
+
+
 def _create_left_right_random_binary_tree_nodes(node: BinaryTreeNode):
     if node.left is None:
         node.left = BinaryTreeNode(random.randint(1, 99))
     if node.right is None:
         node.right = BinaryTreeNode(random.randint(1, 99))
+
+
+def _append_binary_tree_nodes_recursive(parents: [BinaryTreeNode], values: List):
+    new_parents = []
+    for parent in parents:
+        if len(values) > 0:
+            parent.left = BinaryTreeNode(values.pop())
+        if len(values) > 0:
+            parent.right = BinaryTreeNode(values.pop())
+        new_parents.append(parent.left)
+        new_parents.append(parent.right)
+
+    if len(values) > 0:
+        _append_binary_tree_nodes_recursive(new_parents, values)
+
+
+def _append_binary_search_tree_nodes_recursive(node: BinaryTreeNode, smaller_values: List, bigger_values: List):
+    if node is None:
+        return
+
+    (mid, left_part, right_part) = _split_in_mid_left_right(smaller_values)
+    node.left = None if mid is None else BinaryTreeNode(mid)
+    _append_binary_search_tree_nodes_recursive(node.left, left_part, right_part)
+    (mid, left_part, right_part) = _split_in_mid_left_right(bigger_values)
+    node.right = None if mid is None else BinaryTreeNode(mid)
+    _append_binary_search_tree_nodes_recursive(node.right, left_part, right_part)
+
+
+def _split_in_mid_left_right(values: List) -> (int | None, List, List):
+    values_length = len(values)
+    if values_length == 0:
+        return None, [], []
+
+    mid = values.pop((values_length // 2) - 1)
+    left_part = list(filter(lambda x: x <= mid, values))
+    right_part = list(filter(lambda x: x > mid, values))
+
+    return mid, left_part, right_part
