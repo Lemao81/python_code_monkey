@@ -207,10 +207,10 @@ def _append_binary_search_tree_nodes_recursive(node: BinaryTreeNode, smaller_val
         return
 
     (mid, left_part, right_part) = _split_in_mid_left_right(smaller_values)
-    node.left = None if mid is None else BinaryTreeNode(mid)
+    node.left = None if mid is None else BinaryTreeNode(mid, node)
     _append_binary_search_tree_nodes_recursive(node.left, left_part, right_part)
     (mid, left_part, right_part) = _split_in_mid_left_right(bigger_values)
-    node.right = None if mid is None else BinaryTreeNode(mid)
+    node.right = None if mid is None else BinaryTreeNode(mid, node)
     _append_binary_search_tree_nodes_recursive(node.right, left_part, right_part)
 
 
