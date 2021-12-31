@@ -3,3 +3,6 @@ class GraphNode:
         self.value = value
         self.adjacent = []
         self.visited = False
+
+    def __str__(self):
+        return str(self.value)
