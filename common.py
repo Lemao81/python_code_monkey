@@ -183,9 +183,9 @@ def create_binary_search_tree(values: List) -> BinaryTree:
 
 def _create_left_right_random_binary_tree_nodes(node: BinaryTreeNode):
     if node.left is None:
-        node.left = BinaryTreeNode(random.randint(1, 99))
+        node.left = BinaryTreeNode(random.randint(1, 99), node)
     if node.right is None:
-        node.right = BinaryTreeNode(random.randint(1, 99))
+        node.right = BinaryTreeNode(random.randint(1, 99), node)
 
 
 def _append_binary_tree_nodes_recursive(parents: [BinaryTreeNode], values: List):
