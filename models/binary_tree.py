@@ -3,6 +3,7 @@ import sys
 
 from models.binary_tree_node import BinaryTreeNode
 from typing import Callable
+from typing import List
 
 from models.linked_list import LinkedList
 
@@ -25,8 +26,14 @@ class BinaryTree:
     def check_pre_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> bool:
         return self._check_pre_order_recursive(self.root, predicate)
 
-    def find_post_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> BinaryTreeNode:
-        return self._find_post_order_recursive(self.root, predicate)
+    def find_first_post_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> BinaryTreeNode:
+        return self._find_first_post_order_recursive(self.root, predicate)
+
+    def find_all_in_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> [BinaryTreeNode]:
+        found = []
+        self._find_all_in_order_recursive(self.root, predicate, found)
+
+        return found
 
     def get_depth(self) -> int:
         return self._get_depth_recursive(self.root, 0)
@@ -95,15 +102,23 @@ class BinaryTree:
         return predicate(node) and (
                 node is None or self._check_pre_order_recursive(node.left, predicate) and self._check_pre_order_recursive(node.right, predicate))
 
-    def _find_post_order_recursive(self, node: BinaryTreeNode, predicate: Callable[[BinaryTreeNode], bool]) -> BinaryTreeNode:
-        result = None if node is None else self._find_post_order_recursive(node.left, predicate)
-        if result is not None:
-            return result
-        result = None if node is None else self._find_post_order_recursive(node.right, predicate)
-        if result is not None:
-            return result
+    def _find_first_post_order_recursive(self, node: BinaryTreeNode, predicate: Callable[[BinaryTreeNode], bool]) -> BinaryTreeNode:
+        found = None if node is None else self._find_first_post_order_recursive(node.left, predicate)
+        if found is not None:
+            return found
+        found = None if node is None else self._find_first_post_order_recursive(node.right, predicate)
+        if found is not None:
+            return found
 
         return node if predicate(node) else None
+
+    def _find_all_in_order_recursive(self, node: BinaryTreeNode, predicate: Callable[[BinaryTreeNode], bool], found: List) -> [BinaryTreeNode]:
+        if node is None:
+            return
+        if predicate(node):
+            found.append(node)
+        self._find_all_in_order_recursive(node.left, predicate, found)
+        self._find_all_in_order_recursive(node.right, predicate, found)
 
     def _get_depth_recursive(self, node: BinaryTreeNode, depth_index: int) -> int:
         if node is None:

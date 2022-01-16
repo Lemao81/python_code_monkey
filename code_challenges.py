@@ -57,4 +57,20 @@ def find_common_ancestor_in_binary_tree_by_traversal(first: BinaryTreeNode, seco
 
         return first_node_found and second_node_found
 
-    return tree.find_post_order(check_are_sub_nodes)
+    return tree.find_first_post_order(check_are_sub_nodes)
+
+
+def check_is_subtree_of(container: BinaryTree, sub_candidate: BinaryTree) -> bool:
+    candidates = container.find_all_in_order(lambda x: x.value == sub_candidate.root.value)
+    for candidate in candidates:
+        if _check_is_subtree_of_recursive(container.root, candidate):
+            return True
+    return False
+
+
+def _check_is_subtree_of_recursive(first: BinaryTreeNode, second: BinaryTreeNode) -> bool:
+    if first is None and second is None:
+        return True
+    if first is not None or second is not None or first.value != second.value:
+        return False
+    return _check_is_subtree_of_recursive(first.left, second.left) and _check_is_subtree_of_recursive(first.right, second.right)
