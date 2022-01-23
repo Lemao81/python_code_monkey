@@ -32,7 +32,6 @@ class BinaryTree:
     def find_all_in_order(self, predicate: Callable[[BinaryTreeNode], bool]) -> [BinaryTreeNode]:
         found = []
         self._find_all_in_order_recursive(self.root, predicate, found)
-
         return found
 
     def get_depth(self) -> int:
@@ -43,11 +42,11 @@ class BinaryTree:
         return self.root.depth
 
     def is_balanced(self) -> bool:
-        return self.check_pre_order(self._check_balanced)
+        return self.check_pre_order(BinaryTreeNode.is_balanced)
 
     def is_balanced2(self) -> bool:
         self.root.calculate_depths()
-        return self.check_pre_order(lambda node: node is None or node.is_balanced())
+        return self.check_pre_order(lambda node: node is None or node.is_balanced_by_depth())
 
     def is_search_tree(self) -> bool:
         values_sorted = self._get_values_sorted_recursive(self.root)
@@ -109,7 +108,6 @@ class BinaryTree:
         found = None if node is None else self._find_first_post_order_recursive(node.right, predicate)
         if found is not None:
             return found
-
         return node if predicate(node) else None
 
     def _find_all_in_order_recursive(self, node: BinaryTreeNode, predicate: Callable[[BinaryTreeNode], bool], found: List) -> [BinaryTreeNode]:
@@ -139,28 +137,6 @@ class BinaryTree:
         self._get_depth_level_linked_lists(node.left, lists, depth_index + 1)
         self._get_depth_level_linked_lists(node.right, lists, depth_index + 1)
 
-    @staticmethod
-    def _map_depth_level_linked_list_to_print_line(linked_list: LinkedList, total_length: int) -> str:
-        result = ''
-        count = linked_list.get_count()
-        head = linked_list.root
-        while head is not None:
-            result += str(head.value.value).rjust(2, ' ').center(math.floor(total_length / count), ' ')
-            head = head.next
-        return result
-
-    @staticmethod
-    def _check_balanced(node: BinaryTreeNode) -> bool:
-        if node is None:
-            return True
-
-        is_terminating = node.left is None and node.right is None
-        is_continuing_balanced = node.left is not None and node.right is not None
-        is_left_nearly_terminating = node.right is None and node.left is not None and node.left.left is None and node.left.right is None
-        is_right_nearly_terminating = node.left is None and node.right is not None and node.right.left is None and node.right.right is None
-
-        return is_terminating or is_continuing_balanced or is_left_nearly_terminating or is_right_nearly_terminating
-
     def _get_values_sorted_recursive(self, node: BinaryTreeNode) -> []:
         if node is None:
             return []
@@ -180,5 +156,14 @@ class BinaryTree:
             return False
         if not self._check_search_tree_range(node.right, node.value, right_bound):
             return False
-
         return True
+
+    @staticmethod
+    def _map_depth_level_linked_list_to_print_line(linked_list: LinkedList, total_length: int) -> str:
+        result = ''
+        count = linked_list.get_count()
+        head = linked_list.root
+        while head is not None:
+            result += str(head.value.value).rjust(2, ' ').center(math.floor(total_length / count), ' ')
+            head = head.next
+        return result

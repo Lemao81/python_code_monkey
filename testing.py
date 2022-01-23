@@ -1,10 +1,14 @@
-from common import create_random_binary_tree
-from code_challenges import check_is_subtree_of
+from models.binary_search_tree import BinarySearchTree
 
 if __name__ == '__main__':
-    tree1 = create_random_binary_tree(13)
-    tree1.print()
-    tree2 = create_random_binary_tree(1)
-    tree2.print()
-    is_subtree = check_is_subtree_of(tree1, tree2)
-    print('IS subtree' if is_subtree else 'IS NOT subtree')
+    tree = BinarySearchTree.create_random(10, 100)
+    tree.print()
+    nodes_sorted = tree.get_nodes_sorted()
+    nodes_pre_order = tree.root.get_nodes_pre_order()
+
+    print(list(map(lambda x: x.value, nodes_sorted)))
+    print(list(map(lambda x: x.value, nodes_pre_order)))
+    print(tree.get_random_node().value)
+
+    tree.delete(20)
+    tree.print()
