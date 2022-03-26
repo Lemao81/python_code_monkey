@@ -68,6 +68,28 @@ def check_is_subtree_of(container: BinaryTree, sub_candidate: BinaryTree) -> boo
     return False
 
 
+def find_node_path_sum_count(tree: BinaryTree, sum: int) -> int:
+    [_, count] = _get_node_sum_path_count_recursive(tree.root, sum)
+    return count
+
+
+def _get_node_sum_path_count_recursive(node: BinaryTreeNode, search_sum: int) -> List:
+    if node is None:
+        return [[], 0]
+    [sums_left, count_left] = _get_node_sum_path_count_recursive(node.left, search_sum)
+    [sums_right, count_right] = _get_node_sum_path_count_recursive(node.right, search_sum)
+    child_sums = sums_left + sums_right
+    sums = []
+    for child_sum in child_sums:
+        sums.append(child_sum + node.value)
+    sums.append(node.value)
+    count = 0
+    for sum in sums:
+        if sum == search_sum:
+            count += 1
+    return [sums, count_left + count_right + count]
+
+
 def _check_is_subtree_of_recursive(first: BinaryTreeNode, second: BinaryTreeNode) -> bool:
     if first is None and second is None:
         return True
