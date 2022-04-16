@@ -181,6 +181,15 @@ def create_binary_search_tree(values: List) -> BinaryTree:
     return tree
 
 
+def to_binary_string(number: int) -> str:
+    return "{0:b}".format(number)
+
+
+def print_binary(number: int | float):
+    number_norm = number if isinstance(number, int) else int(number)
+    print(to_binary_string(number_norm))
+
+
 def _create_left_right_random_binary_tree_nodes(node: BinaryTreeNode):
     if node.left is None:
         node.left = BinaryTreeNode(random.randint(1, 99), node)
