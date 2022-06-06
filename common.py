@@ -190,6 +190,17 @@ def print_binary(number: int | float):
     print(to_binary_string(number_norm))
 
 
+def binary_counter(number: int) -> int:
+    result = 0
+    shift = False
+    for i in range(number):
+        if shift:
+            result = result << 1
+        else:
+            result += 1
+    return result
+
+
 def _create_left_right_random_binary_tree_nodes(node: BinaryTreeNode):
     if node.left is None:
         node.left = BinaryTreeNode(random.randint(1, 99), node)
