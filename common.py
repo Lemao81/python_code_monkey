@@ -1,6 +1,7 @@
 import traceback
 import logging
 import random
+import sys
 
 from models.binary_tree import BinaryTree
 from models.binary_tree_node import BinaryTreeNode
@@ -181,13 +182,25 @@ def create_binary_search_tree(values: List) -> BinaryTree:
     return tree
 
 
-def to_binary_string(number: int) -> str:
+def get_binary_string(number: int) -> str:
     return "{0:b}".format(number)
 
 
 def print_binary(number: int | float):
     number_norm = number if isinstance(number, int) else int(number)
-    print(to_binary_string(number_norm))
+    print(get_binary_string(number_norm))
+
+
+def get_full_binary_string(number: int):
+    result = ''
+    for x in range(sys.getsizeof(int())):
+        result = ('0' if number & 1 == 0 else '1') + result
+        number >>= 1
+    return result
+
+
+def print_full_binary(number: int):
+    print(get_full_binary_string(number))
 
 
 def binary_counter(number: int) -> int:
@@ -199,6 +212,10 @@ def binary_counter(number: int) -> int:
         else:
             result += 1
     return result
+
+
+def print_separator():
+    print('---------------------')
 
 
 def _create_left_right_random_binary_tree_nodes(node: BinaryTreeNode):
