@@ -1,3 +1,4 @@
+import math
 import traceback
 import logging
 import random
@@ -261,3 +262,33 @@ def _split_in_mid_left_right(values: List) -> (int | None, List, List):
     right_part = list(filter(lambda x: x > mid, values))
 
     return mid, left_part, right_part
+
+
+def is_prime_number(number: int) -> bool:
+    if number < 2:
+        return False
+    if number == 2:
+        return True
+    for x in range(2, number):
+        if number % x == 0:
+            return False
+    return True
+
+
+def is_divisable(top: int, bottom: int):
+    return top % bottom == 0
+
+
+def is_palindrome(string: str) -> bool:
+    half_length = math.ceil(len(string) / 2)
+    for x in range(half_length):
+        if string[x] != string[len(string) - 1 - x]:
+            return False
+    return True
+
+
+def is_palindrome_recursive(string: str) -> bool:
+    length = len(string)
+    if length == 0 or length == 1:
+        return True
+    return False if string[0] != string[length - 1] else True and is_palindrome(string[1:-1])
