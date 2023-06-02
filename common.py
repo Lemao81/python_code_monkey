@@ -292,3 +292,9 @@ def is_palindrome_recursive(string: str) -> bool:
     if length == 0 or length == 1:
         return True
     return False if string[0] != string[length - 1] else True and is_palindrome(string[1:-1])
+
+
+def swap_items(array: list, index1: int, index2: int):
+    temp = array[index1]
+    array[index1] = array[index2]
+    array[index2] = temp
